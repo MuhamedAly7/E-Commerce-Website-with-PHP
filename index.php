@@ -180,21 +180,29 @@
                     <li class="nav-item bg-info">
                         <a href="#" class="nav-link text-light"><h4>Delivary Brands</h4></a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Brand 1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Brand 2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Brand 3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Brand 4</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Brand 5</a>
-                    </li>
+                    <?php
+                    include("./includes/connect.php");
+                    $brands_table_name = "brands";
+                    $select_brands_query = "SELECT * FROM " . $brands_table_name;
+                    $brands_obj = $con->prepare($select_brands_query);
+                    if($brands_obj->execute())
+                    {
+                        $res = $brands_obj->get_result();
+                        while($row_data = $res->fetch_assoc())
+                        {
+                            $brand_title = $row_data['brand_title'];
+                            $brand_id = $row_data['brand_id'];
+                            // echo $brand_title;
+                            echo "<li class='nav-item'>
+                            <a href='index.php?brand=$brand_id' class='nav-link text-light'>$brand_title</a>
+                            </li>";
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                    // The end of php tag?> 
                 </ul>
 
 
@@ -202,21 +210,30 @@
                     <li class="nav-item bg-info">
                         <a href="#" class="nav-link text-light"><h4>Categories</h4></a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Category 1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Category 2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Category 3</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Category 4</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-light">Category 5</a>
-                    </li>
+
+                    <?php
+                    include("./includes/connect.php");
+                    $categories_table_name = "categories";
+                    $select_categories_query = "SELECT * FROM " . $categories_table_name;
+                    $categories_obj = $con->prepare($select_categories_query);
+                    if($categories_obj->execute())
+                    {
+                        $res = $categories_obj->get_result();
+                        while($row_data = $res->fetch_assoc())
+                        {
+                            $category_title = $row_data['category_title'];
+                            $category_id = $row_data['category_id'];
+                            // echo $category_title;
+                            echo "<li class='nav-item'>
+                            <a href='index.php?category=$category_id' class='nav-link text-light'>$category_title</a>
+                            </li>";
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                    // The end of php tag?>
                 </ul>
             </div>
         </div>
