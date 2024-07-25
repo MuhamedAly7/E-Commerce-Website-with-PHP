@@ -12,7 +12,7 @@ function getProducts()
         if(!isset($_GET['brand']))
         {
             $products_table_name = "products";
-            $select_product_query = "SELECT * FROM " . $products_table_name . " ORDER BY RAND() LIMIT 0,9";
+            $select_product_query = "SELECT * FROM " . $products_table_name . " ORDER BY RAND() LIMIT 0,2";
             $products_obj = $con->prepare($select_product_query);
             if($products_obj->execute())
             {
@@ -56,6 +56,63 @@ function getProducts()
 
     }
 }
+
+
+// getting all products
+function getAllProducts()
+{
+    global $con;
+
+    if(!isset($_GET['category']))
+    {
+        if(!isset($_GET['brand']))
+        {
+            $products_table_name = "products";
+            $select_product_query = "SELECT * FROM " . $products_table_name . " ORDER BY RAND()";
+            $products_obj = $con->prepare($select_product_query);
+            if($products_obj->execute())
+            {
+                $res = $products_obj->get_result();
+                while($row_data = $res->fetch_assoc())
+                {
+                    $product_id = $row_data['product_id'];
+                    $product_title = $row_data['product_title'];
+                    $product_description = $row_data['product_description'];
+                    // $product_keywords = $row_data['product_keywords'];
+                    $product_image1 = $row_data['product_image1'];
+                    $product_price = $row_data['product_price'];
+                    $product_category_id = $row_data['category_id'];
+                    $product_brand_id = $row_data['brand_id'];
+        
+                    echo "<div class='col-md-4 mb-2'>
+                                <div class='card'>
+                                    <img src='./admin_area/product_images/$product_image1' class='card-img-top' alt='$product_title'>
+                                    <div class='card-body'>
+                                        <h5 class='card-title'>$product_title</h5>
+                                        <p class='card-text'>$product_description</p>
+                                        <a href='#' class='btn btn-info'>Add to cart</a>
+                                        <a href='#' class='btn btn-secondary'>View more</a>
+                                    </div>
+                                </div>
+                            </div>";
+                }
+            }
+            else
+            {
+                
+            }
+        }
+        else
+        {
+
+        }
+    }
+    else
+    {
+
+    }
+}
+
 
 // Getting unique categories
 function getUniqueCategories()
@@ -215,6 +272,61 @@ function getCategories()
             echo "<li class='nav-item'>
             <a href='index.php?category=$category_id' class='nav-link text-light'>$category_title</a>
             </li>";
+        }
+    }
+    else
+    {
+
+    }
+}
+
+// Searching products
+function searchProduct()
+{
+    global $con;
+    if(isset($_GET['search_data_product']))
+    {
+        $products_table_name = "products";
+        $user_search = $_GET['search_data'];
+        $search_product_query = "SELECT * FROM " . $products_table_name . " WHERE product_keywords LIKE '%$user_search%'";
+        $products_obj = $con->prepare($search_product_query);
+        if($products_obj->execute())
+        {
+            $res = $products_obj->get_result();
+            if($res->num_rows > 0)
+            {
+                while($row_data = $res->fetch_assoc())
+                {
+                    $product_id = $row_data['product_id'];
+                    $product_title = $row_data['product_title'];
+                    $product_description = $row_data['product_description'];
+                    // $product_keywords = $row_data['product_keywords'];
+                    $product_image1 = $row_data['product_image1'];
+                    $product_price = $row_data['product_price'];
+                    $product_category_id = $row_data['category_id'];
+                    $product_brand_id = $row_data['brand_id'];
+            
+                    echo "<div class='col-md-4 mb-2'>
+                                <div class='card'>
+                                    <img src='./admin_area/product_images/$product_image1' class='card-img-top' alt='$product_title'>
+                                    <div class='card-body'>
+                                        <h5 class='card-title'>$product_title</h5>
+                                        <p class='card-text'>$product_description</p>
+                                        <a href='#' class='btn btn-info'>Add to cart</a>
+                                        <a href='#' class='btn btn-secondary'>View more</a>
+                                    </div>
+                                </div>
+                            </div>";
+                }
+            }
+            else
+            {
+                echo "<h2 class='text-center text-danger'>No results matches. No products on this category!</h2>";
+            }
+        }
+        else
+        {
+                
         }
     }
     else
