@@ -1,3 +1,7 @@
+<?php
+include("./includes/connect.php");
+include("./funcs/common_function.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +13,14 @@
     <!-- font awesome link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS file -->
-     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .footer{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
     
@@ -69,109 +80,20 @@
          </div>
 
         <!-- Fourth child -->
-        <div class="row">
+        <div class="row px-1">
             <div class="col-md-10">
                 <!-- products -->
                 <div class="row">
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/tomato.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/Egg_fruit.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/kiwi.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/avocado.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/avocado.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/avocado.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/avocado.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/kiwi.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <div class="card">
-                            <img src="./images/kiwi.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-info">Add to cart</a>
-                                <a href="#" class="btn btn-secondary">View more</a>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <!-- Fetching products -->
+                    <?php
+                    // Fetching all products
+                    getProducts();
+                    getUniqueCategories();
+                    getUniqueBrands();
+                    ?>
+                    
+                    
                 </div>
             </div>
             <div class="col-md-2 bg-secondary p-0">
@@ -181,28 +103,9 @@
                         <a href="#" class="nav-link text-light"><h4>Delivary Brands</h4></a>
                     </li>
                     <?php
-                    include("./includes/connect.php");
-                    $brands_table_name = "brands";
-                    $select_brands_query = "SELECT * FROM " . $brands_table_name;
-                    $brands_obj = $con->prepare($select_brands_query);
-                    if($brands_obj->execute())
-                    {
-                        $res = $brands_obj->get_result();
-                        while($row_data = $res->fetch_assoc())
-                        {
-                            $brand_title = $row_data['brand_title'];
-                            $brand_id = $row_data['brand_id'];
-                            // echo $brand_title;
-                            echo "<li class='nav-item'>
-                            <a href='index.php?brand=$brand_id' class='nav-link text-light'>$brand_title</a>
-                            </li>";
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                    // The end of php tag?> 
+                    // Fetching all brands
+                    getBrands();
+                    ?> 
                 </ul>
 
 
@@ -212,34 +115,15 @@
                     </li>
 
                     <?php
-                    include("./includes/connect.php");
-                    $categories_table_name = "categories";
-                    $select_categories_query = "SELECT * FROM " . $categories_table_name;
-                    $categories_obj = $con->prepare($select_categories_query);
-                    if($categories_obj->execute())
-                    {
-                        $res = $categories_obj->get_result();
-                        while($row_data = $res->fetch_assoc())
-                        {
-                            $category_title = $row_data['category_title'];
-                            $category_id = $row_data['category_id'];
-                            // echo $category_title;
-                            echo "<li class='nav-item'>
-                            <a href='index.php?category=$category_id' class='nav-link text-light'>$category_title</a>
-                            </li>";
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                    // The end of php tag?>
+                    // Fetching all categories
+                    getCategories();
+                    ?>
                 </ul>
             </div>
         </div>
 
         <!-- last child -->
-        <div class="bg-info p-3 text-center">
+        <div class="bg-info p-3 text-center footer">
            <p>This Website Designed For Developed Online Shop</p>
         </div>
     </div>
