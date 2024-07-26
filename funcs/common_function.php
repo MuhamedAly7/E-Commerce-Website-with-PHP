@@ -454,7 +454,7 @@ function cart()
         global $con;
         $ip = getIPAddress();
         $product_id = $_GET['add_to_cart'];
-        $quantity = 0;
+        $quantity = 1;
         $cart_table_name = "cart_details";
         $select_product_query = "SELECT * FROM " . $cart_table_name . " WHERE ip_address = ? AND product_id = ?";
 
@@ -553,7 +553,7 @@ function totalCartPrice()
                     {
                         while($row_data_products = $res_products->fetch_assoc())
                         {
-                            $product_price = array($row_data_products['product_price']);
+                            $product_price = array($row_data_products['product_price'] * $row_data['quantity']);
                             $product_values = array_sum($product_price);
                             $total_price += $product_values;
                         }
@@ -581,5 +581,87 @@ function totalCartPrice()
 
     echo $total_price;
 }
+
+
+// This function to display info and update quantity and remove carts
+function manageCart()
+{
+    global $con;
+    $ip = getIPAddress();
+    $total_price = 0;
+    $cart_table_name = "cart_details";
+    $select_product_query = "SELECT * FROM " . $cart_table_name . " WHERE ip_address = ?";
+    $cart_obj = $con->prepare($select_product_query);
+    $cart_obj->bind_param("s", $ip);
+    if ($cart_obj->execute()) {
+        $res = $cart_obj->get_result();
+        if ($res->num_rows > 0) {
+            while ($row_data = $res->fetch_assoc()) {
+                $product_id = $row_data['product_id'];
+                $products_table_name = "products";
+                $select_products_query = "SELECT * FROM " . $products_table_name . " WHERE product_id = ?";
+                $products_obj = $con->prepare($select_products_query);
+                $products_obj->bind_param("i", $product_id);
+                if ($products_obj->execute()) {
+                    $res_products = $products_obj->get_result();
+                    if ($res_products->num_rows > 0) {
+                        while ($row_data_products = $res_products->fetch_assoc()) {
+                            $product_price = array($row_data_products['product_price'] * $row_data['quantity']);
+                            $price_table = $row_data_products['product_price'] * $row_data['quantity'];
+                            $product_title = $row_data_products['product_title'];
+                            $product_image1 = $row_data_products['product_image1'];
+                            $product_values = array_sum($product_price);
+                            $total_price += $product_values;
+                            ?>
+                            <tr>
+                                <td><?php echo $product_title; ?></td>
+                                <td><img src="./admin_area/product_images/<?php echo $product_image1; ?>" alt="" class="cart_img"></td>
+                                <td><input type="text" name="quantity[<?php echo $product_id; ?>]" class="form-input w-50" value="<?php echo $row_data['quantity']; ?>"></td>
+                                <td><?php echo $price_table; ?>/-</td>
+                                <td><input type="checkbox" name="remove[]" value="<?php echo $product_id; ?>"></td>
+                                <td>
+                                    <input type="submit" value="Update Cart" class="bg-info px-3 py-2 border-0 mx-3" name="update_cart">
+                                    <button type="submit" class="bg-info px-3 py-2 border-0 mx-3" name="remove_cart" value="<?php echo $product_id; ?>">Remove</button>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Update cart event
+    if (isset($_POST['update_cart'])) {
+        foreach ($_POST['quantity'] as $product_id => $quantity) {
+            if (filter_var($quantity, FILTER_VALIDATE_INT) !== false) {
+                $update_cart_query = "UPDATE " . $cart_table_name . " SET quantity = ? WHERE ip_address = ? AND product_id = ?";
+                $update_cart_obj = $con->prepare($update_cart_query);
+                $update_cart_obj->bind_param("isi", $quantity, $ip, $product_id);
+                $update_cart_obj->execute();
+                echo "<script>window.open('cart.php','_self');</script>";
+            } else {
+                echo "<script>alert('Quantity must be a number!');</script>";
+                echo "<script>window.open('cart.php','_self');</script>";
+            }
+        }
+    }
+
+    // remove cart event
+    if (isset($_POST['remove_cart'])) {
+        $product_id = $_POST['remove_cart'];
+        $delete_cart_query = "DELETE FROM " . $cart_table_name . " WHERE ip_address = ? AND product_id = ?";
+        $delete_cart_obj = $con->prepare($delete_cart_query);
+        $delete_cart_obj->bind_param("si", $ip, $product_id);
+        $delete_cart_obj->execute();
+        echo "<script>window.open('cart.php','_self');</script>";
+    }
+
+}
+
+
+
+
 
 ?>

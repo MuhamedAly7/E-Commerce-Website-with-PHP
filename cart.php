@@ -20,6 +20,11 @@ include("./funcs/common_function.php");
             width: 100%;
             bottom: 0;
         }
+        .cart_img{
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -75,40 +80,41 @@ include("./funcs/common_function.php");
         
         <!-- Fourth child -->
         <div class="container">
-            <div class="row">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th>Product Title</th>
-                            <th>Product Image</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
-                            <th>Remove</th>
-                            <th>Operations</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Apple</td>
-                            <td><img src="./images/apple1.jpg" alt=""></td>
-                            <td><input type="text"></td>
-                            <td>900</td>
-                            <td><input type="checkbox"></td>
-                            <td>
-                                <p>Update</p>
-                                <p>Remove</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- sub-total -->
-                <div class="d-flex mb-5">
-                    <h4 class="px-3">Subtotal:<strong class="text-info">5000/-</strong></h4>
-                    <a href="index.php"><button class="bg-info p-2 border-0">Continue Shopping</button></a>
-                    <a href="#"><button class="bg-secondary p-2 border-0 mx-3 text-light">Checkout</button></a>
+            <form action="" method="POST">
+                <div class="row">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>Product Title</th>
+                                <th>Product Image</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                                <th>Remove</th>
+                                <th colspan="2">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- PHP for display real and dynamic data -->
+                            <?php
+                            manageCart();
+                            ?>
+                        </tbody>
+                    </table>
+                    <!-- sub-total -->
+                    <div class="d-flex mb-5">
+                        <h4 class="px-3">Subtotal:<strong class="text-info"><?php totalCartPrice(); ?>/-</strong></h4>
+                        <a href="index.php"><button class="bg-info p-2 border-0">Continue Shopping</button></a>
+                        <a href="#"><button class="bg-secondary p-2 border-0 mx-3 text-light">Checkout</button></a>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
+
+<!-- Update Cart data -->
+<?php
+// updateCart();
+// removeCart();
+?>
 
         <!-- last child -->
         <div class="bg-info p-3 text-center footer">
