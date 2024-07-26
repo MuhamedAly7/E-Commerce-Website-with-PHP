@@ -595,7 +595,7 @@ function manageCart()
     $cart_obj->bind_param("s", $ip);
     if ($cart_obj->execute()) {
         $res = $cart_obj->get_result();
-        if ($res->num_rows > 0) {
+        if($res->num_rows > 0) {
             while ($row_data = $res->fetch_assoc()) {
                 $product_id = $row_data['product_id'];
                 $products_table_name = "products";
@@ -618,10 +618,10 @@ function manageCart()
                                 <td><img src="./admin_area/product_images/<?php echo $product_image1; ?>" alt="" class="cart_img"></td>
                                 <td><input type="text" name="quantity[<?php echo $product_id; ?>]" class="form-input w-50" value="<?php echo $row_data['quantity']; ?>"></td>
                                 <td><?php echo $price_table; ?>/-</td>
-                                <td><input type="checkbox" name="remove[]" value="<?php echo $product_id; ?>"></td>
+                                <!-- <td><input type="checkbox" name="remove[]" value="<?php echo $product_id; ?>"></td> -->
                                 <td>
                                     <input type="submit" value="Update Cart" class="bg-info px-3 py-2 border-0 mx-3" name="update_cart">
-                                    <button type="submit" class="bg-info px-3 py-2 border-0 mx-3" name="remove_cart" value="<?php echo $product_id; ?>">Remove</button>
+                                    <button type="submit" class="bg-info px-3 py-2 border-0 mx-3" name="remove_cart" value="<?php echo $product_id; ?>">Remove Cart</button>
                                 </td>
                             </tr>
                             <?php
@@ -629,6 +629,10 @@ function manageCart()
                     }
                 }
             }
+        }
+        else
+        {
+            echo "<h2 class='text-center text-danger'>Cart is Empty!</h2>";
         }
     }
 

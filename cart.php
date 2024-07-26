@@ -89,7 +89,7 @@ include("./funcs/common_function.php");
                                 <th>Product Image</th>
                                 <th>Quantity</th>
                                 <th>Total Price</th>
-                                <th>Remove</th>
+                                <!-- <th>Remove</th> -->
                                 <th colspan="2">Operations</th>
                             </tr>
                         </thead>
