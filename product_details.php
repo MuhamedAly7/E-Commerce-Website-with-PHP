@@ -84,11 +84,10 @@ include("./funcs/common_function.php");
             <div class="col-md-10">
                 <!-- products -->
                 <div class="row">
-                    
                     <!-- Fetching products -->
                     <?php
                     // Fetching all products
-                    getAllProducts();
+                    viewDetails();
                     getUniqueCategories();
                     getUniqueBrands();
                     cart();
