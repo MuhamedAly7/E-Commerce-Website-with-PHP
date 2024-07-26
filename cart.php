@@ -7,7 +7,7 @@ include("./funcs/common_function.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecommerce Website using PHP with MySql.</title>
+    <title>Ecommerce Website Cart Page.</title>
     <!-- bootstarp CSS link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- font awesome link -->
@@ -49,14 +49,7 @@ include("./funcs/common_function.php");
                         <li class="nav-item">
                             <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cartItem(); ?></sup></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Total Price:<?php totalCartPrice(); ?>/-</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" action="search_product.php" method="GET">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
-                        <input type="submit" value="Search" class="btn btn-outline-light" name="search_data_product">
-                    </form> 
+                    </ul> 
                 </div>
             </div>
         </nav>
@@ -79,47 +72,41 @@ include("./funcs/common_function.php");
             <p class="text-center">Communications is at the heart of e-commerce and community</p>
          </div>
 
+        
         <!-- Fourth child -->
-        <div class="row px-1">
-            <div class="col-md-10">
-                <!-- products -->
-                <div class="row">
-                    
-                    <!-- Fetching products -->
-                    <?php
-                    // Fetching all products
-                    getProducts();
-                    getUniqueCategories();
-                    getUniqueBrands();
-                    cart();
-                    ?>
-                    
-                    
+        <div class="container">
+            <div class="row">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>Product Title</th>
+                            <th>Product Image</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <th>Remove</th>
+                            <th>Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Apple</td>
+                            <td><img src="./images/apple1.jpg" alt=""></td>
+                            <td><input type="text"></td>
+                            <td>900</td>
+                            <td><input type="checkbox"></td>
+                            <td>
+                                <p>Update</p>
+                                <p>Remove</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- sub-total -->
+                <div class="d-flex mb-5">
+                    <h4 class="px-3">Subtotal:<strong class="text-info">5000/-</strong></h4>
+                    <a href="index.php"><button class="bg-info p-2 border-0">Continue Shopping</button></a>
+                    <a href="#"><button class="bg-secondary p-2 border-0 mx-3 text-light">Checkout</button></a>
                 </div>
-            </div>
-            <div class="col-md-2 bg-secondary p-0">
-                <!-- sidenav -->
-                <ul class="navbar-nav me-auto text-center">
-                    <li class="nav-item bg-info">
-                        <a href="#" class="nav-link text-light"><h4>Delivary Brands</h4></a>
-                    </li>
-                    <?php
-                    // Fetching all brands
-                    getBrands();
-                    ?> 
-                </ul>
-
-
-                <ul class="navbar-nav me-auto text-center">
-                    <li class="nav-item bg-info">
-                        <a href="#" class="nav-link text-light"><h4>Categories</h4></a>
-                    </li>
-
-                    <?php
-                    // Fetching all categories
-                    getCategories();
-                    ?>
-                </ul>
             </div>
         </div>
 
