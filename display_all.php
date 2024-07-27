@@ -41,13 +41,13 @@ include("./funcs/common_function.php");
                             <a class="nav-link" href="display_all.php">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Register</a>
+                            <a class="nav-link" href="./users_area/user_registration.php">Register</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i><sup><?php cartItem(); ?></sup></a>
+                            <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cartItem(); ?></sup></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Total Price:<?php totalCartPrice(); ?>/-</a>
@@ -68,7 +68,7 @@ include("./funcs/common_function.php");
                     <a href="#" class="nav-link">Welcome Guest</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Login</a>
+                    <a href="./users_area/user_login.php" class="nav-link">Login</a>
                 </li>
             </ul>
         </nav>

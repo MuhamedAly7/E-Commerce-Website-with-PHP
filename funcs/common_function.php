@@ -596,6 +596,17 @@ function manageCart()
     if ($cart_obj->execute()) {
         $res = $cart_obj->get_result();
         if($res->num_rows > 0) {
+            // show the head of table if and only if there is a product in table
+            echo "<thead>
+                        <tr>
+                            <th>Product Title</th>
+                            <th>Product Image</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <!-- <th>Remove</th> -->
+                            <th colspan='2'>Operations</th>
+                        </tr>
+                    </thead>";
             while ($row_data = $res->fetch_assoc()) {
                 $product_id = $row_data['product_id'];
                 $products_table_name = "products";
@@ -616,7 +627,7 @@ function manageCart()
                             <tr>
                                 <td><?php echo $product_title; ?></td>
                                 <td><img src="./admin_area/product_images/<?php echo $product_image1; ?>" alt="" class="cart_img"></td>
-                                <td><input type="text" name="quantity[<?php echo $product_id; ?>]" class="form-input w-50" value="<?php echo $row_data['quantity']; ?>"></td>
+                                <td><input type="text" name="quantity[<?php echo $product_id; ?>]" class="form-input w-50 my-2" value="<?php echo $row_data['quantity']; ?>"></td>
                                 <td><?php echo $price_table; ?>/-</td>
                                 <!-- <td><input type="checkbox" name="remove[]" value="<?php echo $product_id; ?>"></td> -->
                                 <td>
