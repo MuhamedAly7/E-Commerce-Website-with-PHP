@@ -1,3 +1,8 @@
+<?php
+include("../includes/connect.php");
+include("../funcs/common_function.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +43,7 @@
                     <!-- Confirm field -->
                     <div class="form-outline mb-4">
                         <label for="user_password" class="form-label">Confirm Password</label>
-                        <input type="email" id="conf_user_email" class="form-control" autocomplete="off" placeholder="Confirm password" required="required" name="conf_user_email">
+                        <input type="password" id="conf_user_password" class="form-control" autocomplete="off" placeholder="Confirm password" required="required" name="conf_user_password">
                     </div>
                     <!-- Address field -->
                     <div class="form-outline mb-4">
@@ -64,3 +69,80 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+<?php
+
+if(isset($_POST['user_register']))
+{
+    $user_username = $_POST['user_username'];
+    $user_email = $_POST['user_email'];
+    $user_password = $_POST['user_password'];
+    $hash_password = password_hash($user_password, PASSWORD_DEFAULT);
+    $conf_user_password = $_POST['conf_user_password'];
+    $user_address = $_POST['user_address'];
+    $user_contact = $_POST['user_contact'];
+    $user_image = $_FILES['user_image']['name'];
+    $user_image_tmp = $_FILES['user_image']['tmp_name'];
+    $user_ip = getIPAddress();    
+    $users_table_name = "user_table";
+    $cart_table_name = "cart_details";
+
+    // select query to avoid duplication of username
+    $user_select_query = "SELECT * FROM " . $users_table_name . " WHERE username = ? OR user_email = ?";
+    $user_obj = $con->prepare($user_select_query);
+    $user_obj->bind_param("ss", $user_username, $user_email);
+    if($user_obj->execute())
+    {
+        $res = $user_obj->get_result();
+        if($res->num_rows > 0)
+        {
+            echo "<script>alert('Username or Email is already exists!');</script>";
+        }
+        elseif($user_password != $conf_user_password)
+        {
+            echo "<script>alert('Passwords does not match!');</script>";
+        }
+        else
+        {
+            move_uploaded_file($user_image_tmp, "./user_images/$user_image");
+            $user_insert_query = "INSERT INTO " . $users_table_name . "(username,user_email,user_password,user_image,user_ip,user_address,user_mobile) VALUES (?,?,?,?,?,?,?)";
+            $user_insert_obj = $con->prepare($user_insert_query);
+            $user_insert_obj->bind_param("sssssss", $user_username, $user_email, $hash_password, $user_image, $user_ip, $user_address, $user_contact);
+            if($user_insert_obj->execute())
+            {
+                echo "<script>alert('User inserted successfully!');</script>";
+            }
+            else
+            {
+                echo "<script>alert('Failed to insert user!');</script>";
+            }
+        }
+    }
+
+    // selecting cart items
+    $select_cart_items = "SELECT * FROM " . $cart_table_name . " WHERE ip_address = ?";
+    $select_cart_obj = $con->prepare($select_cart_items);
+    $select_cart_obj->bind_param("s", $user_ip);
+    if($select_cart_obj->execute())
+    {
+        $result = $select_cart_obj->get_result();
+        if($result->num_rows > 0)
+        {
+            $_SESSION['username'] = $user_username;
+            echo "<script>alert('You have items in your cart');</script>";
+            echo "<script>window.open('checkout.php', '_self');</script>";
+        }
+        else
+        {
+            echo "<script>window.open('../index.php', '_self');</script>";
+
+        }
+    }
+    else
+    {
+
+    }
+}
+
+?>

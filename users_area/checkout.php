@@ -84,7 +84,7 @@ include("../includes/connect.php");
                     }
                     else
                     {
-                        include("payment.php");                        
+                        include("../payment.php");                        
                     }
                     ?>
                 </div>
