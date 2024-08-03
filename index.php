@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("./includes/connect.php");
 include("./funcs/common_function.php");
 ?>
@@ -8,22 +9,22 @@ include("./funcs/common_function.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecommerce Website using PHP with MySql.</title>
-    <!-- bootstarp CSS link -->
+    <!-- Bootstrap CSS link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- font awesome link -->
+    <!-- Font Awesome link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS file -->
     <link rel="stylesheet" href="style.css">
     <style>
-        .footer{
-            position: absolute;
+        .footer {
             width: 100%;
-            bottom: 0;
+        }
+        body {
+            overflow-x: hidden;
         }
     </style>
 </head>
 <body>
-    
     <div class="container-fluid p-0">
         <!-- first child -->
         <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -64,37 +65,48 @@ include("./funcs/common_function.php");
         <!-- second child -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Welcome Guest</a>
-                </li>
-                <li class="nav-item">
-                    <a href="./users_area/user_login.php" class="nav-link">Login</a>
-                </li>
+                <?php
+                if(!isset($_SESSION['username'])) {
+                    echo "<li class='nav-item'>
+                            <a href='#' class='nav-link'>Welcome Guest</a>
+                        </li>";
+                } else {
+                    echo "<li class='nav-item'>
+                            <a href='#' class='nav-link'>Welcome " . $_SESSION['username'] . "</a>
+                        </li>";
+                }
+
+                if(!isset($_SESSION['username'])) {
+                    echo "<li class='nav-item'>
+                            <a href='./users_area/user_login.php' class='nav-link'>Login</a>
+                        </li>";
+                } else {
+                    echo "<li class='nav-item'>
+                            <a href='./users_area/user_logout.php' class='nav-link'>Logout</a>
+                        </li>";
+                }
+                ?>
             </ul>
         </nav>
 
         <!-- Third child -->
-         <div class="bg-light">
+        <div class="bg-light">
             <h3 class="text-center">First Store</h3>
             <p class="text-center">Communications is at the heart of e-commerce and community</p>
-         </div>
+        </div>
 
         <!-- Fourth child -->
         <div class="row px-1">
             <div class="col-md-10">
                 <!-- products -->
                 <div class="row">
-                    
                     <!-- Fetching products -->
                     <?php
-                    // Fetching all products
                     getProducts();
                     getUniqueCategories();
                     getUniqueBrands();
                     cart();
                     ?>
-                    
-                    
                 </div>
             </div>
             <div class="col-md-2 bg-secondary p-0">
@@ -103,22 +115,13 @@ include("./funcs/common_function.php");
                     <li class="nav-item bg-info">
                         <a href="#" class="nav-link text-light"><h4>Delivary Brands</h4></a>
                     </li>
-                    <?php
-                    // Fetching all brands
-                    getBrands();
-                    ?> 
+                    <?php getBrands(); ?> 
                 </ul>
-
-
                 <ul class="navbar-nav me-auto text-center">
                     <li class="nav-item bg-info">
                         <a href="#" class="nav-link text-light"><h4>Categories</h4></a>
                     </li>
-
-                    <?php
-                    // Fetching all categories
-                    getCategories();
-                    ?>
+                    <?php getCategories(); ?>
                 </ul>
             </div>
         </div>
@@ -129,7 +132,7 @@ include("./funcs/common_function.php");
         </div>
     </div>
 
-    <!-- bootstrap js link -->
+    <!-- Bootstrap JS link -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

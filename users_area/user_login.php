@@ -1,4 +1,5 @@
 <?php
+// session_start();
 include("../includes/connect.php");
 include("../funcs/common_function.php");
 ?>
@@ -9,13 +10,12 @@ include("../funcs/common_function.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login</title>
-    <!-- bootstarp CSS link -->
+    <!-- Bootstrap CSS link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- font awesome link -->
+    <!-- Font Awesome link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <style>
-        body{
+        body {
             overflow-x: hidden;
         }
     </style>
@@ -46,19 +46,15 @@ include("../funcs/common_function.php");
                 </form>
             </div>
         </div>
-
     </div>
 
-<!-- bootstrap js link -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS link -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
 
-
 <?php
-
-if(isset($_POST['user_login']))
-{
+if(isset($_POST['user_login'])) {
     $username = $_POST['user_username'];
     $user_password = $_POST['user_password'];
     $user_ip = getIPAddress();
@@ -66,8 +62,7 @@ if(isset($_POST['user_login']))
     $select_user_query = 'SELECT * FROM ' . $user_table_name . ' WHERE username = ?';
     $user_obj = $con->prepare($select_user_query);
     $user_obj->bind_param('s', $username);
-    if($user_obj->execute())
-    {
+    if($user_obj->execute()) {
         $res = $user_obj->get_result();
 
         // Cart Item
@@ -79,43 +74,24 @@ if(isset($_POST['user_login']))
         $item_res = $item_object->get_result();
         $items_count = $item_res->num_rows;
 
-
-
-        if($res->num_rows > 0)
-        {
+        if($res->num_rows > 0) {
             $row_data = $res->fetch_assoc();
-            $_SESSION['username'] = $user_username;
-            if(password_verify($user_password, $row_data['user_password']))
-            {
-                // echo "<script>alert('Login Successfully!');</script>";
-                if(($res->num_rows == 1) && ($items_count == 0))
-                {
-                    $_SESSION['username'] = $user_username;
-                    echo "<script>alert('Login Successfully!');</script>";
+            if(password_verify($user_password, $row_data['user_password'])) {
+                $_SESSION['username'] = $username;
+                if($items_count == 0) {
                     echo "<script>window.open('profile.php', '_self');</script>";
-                }
-                else
-                {
-                    $_SESSION['username'] = $user_username;
-                    echo "<script>alert('Login Successfully!');</script>";
+                } else {
                     echo "<script>window.open('payment.php', '_self');</script>";
                 }
-            }
-            else
-            {
+                exit();
+            } else {
                 echo "<script>alert('Invalid Credentials');</script>";
             }
-        }
-        else
-        {
+        } else {
             echo "<script>alert('Invalid Credentials');</script>";
         }
+    } else {
+        echo "<script>alert('Error executing query');</script>";
     }
-    else
-    {
-
-    }
-
 }
-
 ?>

@@ -12,7 +12,7 @@ function getProducts()
         if(!isset($_GET['brand']))
         {
             $products_table_name = "products";
-            $select_product_query = "SELECT * FROM " . $products_table_name . " ORDER BY RAND() LIMIT 0,2";
+            $select_product_query = "SELECT * FROM " . $products_table_name . " ORDER BY RAND() LIMIT 0,6";
             $products_obj = $con->prepare($select_product_query);
             if($products_obj->execute())
             {

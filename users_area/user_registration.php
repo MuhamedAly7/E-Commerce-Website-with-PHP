@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../includes/connect.php");
 include("../funcs/common_function.php");
 ?>
@@ -135,6 +136,7 @@ if(isset($_POST['user_register']))
         }
         else
         {
+            $_SESSION['username'] = $user_username;
             echo "<script>window.open('../index.php', '_self');</script>";
 
         }
